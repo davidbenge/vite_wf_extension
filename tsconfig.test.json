@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "types": ["jest", "node", "@testing-library/jest-dom"],
+    "isolatedModules": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "test/**/*.ts",
+    "test/**/*.tsx",
+    "jest.setup.ts"
+  ],
+  "exclude": ["node_modules"]
+} 

@@ -1,0 +1,12 @@
+{
+  "name": "test port",
+  "id": "test-port",
+  "description": "test the port from js to ts and to vite and off parcel",
+  "version": "0.0.1",
+  "mainMenuItems": [
+    {
+      "label": "Test Port",
+      "id": "test-port"
+    }
+  ]
+}

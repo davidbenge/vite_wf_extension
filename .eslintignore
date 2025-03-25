@@ -1,0 +1,23 @@
+# Build output
+dist
+coverage
+
+# Dependencies
+node_modules
+
+# Configuration files
+*.config.js
+*.config.ts
+vite.config.ts
+jest.config.ts
+jest.setup.ts
+
+# Generated files
+*.generated.*
+*.min.*
+
+# Test mocks
+test/__mocks__
+
+# Environment files
+.env* 

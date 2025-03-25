@@ -1,0 +1,26 @@
+# Build output
+dist
+coverage
+
+# Dependencies
+node_modules
+
+# Logs
+*.log
+
+# Cache directories
+.eslintcache
+.npm
+.cache
+
+# Environment files
+.env*
+!.env.example
+
+# IDE directories
+.idea
+.vscode
+
+# Generated files
+*.generated.*
+*.min.* 
