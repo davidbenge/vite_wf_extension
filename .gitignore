@@ -6,7 +6,7 @@ jspm_packages
 build
 dist
 .manifest-dist.yml
-
+src/workfront-ui-1/src
 # Config
 config.json
 .env*
