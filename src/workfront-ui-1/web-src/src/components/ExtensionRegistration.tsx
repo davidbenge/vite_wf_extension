@@ -2,73 +2,50 @@
  * <license header>
  */
 
-import React, { useEffect, useState } from "react";
-import { Text } from "@adobe/react-spectrum";
+import React from "react";
+import { View, Text } from "@adobe/react-spectrum";
 import { register } from "@adobe/uix-guest";
-import { extensionId } from "./Constants";
-import metadata from '../../../../app-metadata.json';
-import { icon1, icon2 } from './icons';
-
-interface MenuItem {
-  id: string;
-  url: string;
-  label: string;
-  icon: string;
-}
+import { EXTENSION_ID } from "./Constants";
+import metadata from "../../../../app-metadata.json";
 
 const ExtensionRegistration: React.FC = () => {
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = React.useState(false);
 
-  useEffect(() => {
-    const init = async (): Promise<void> => {
+  React.useEffect(() => {
+    const initGuest = async () => {
       try {
-        const connection = await register({
-          id: extensionId,
+        await register({
+          id: EXTENSION_ID,
           metadata,
           methods: {
-            mainMenu: {
-              getItems(): MenuItem[] {
-                return [
-                  {
-                    id: 'test-port',
-                    url: '/index.html#/extensions/mainmenu-test_port',
-                    label: 'Test Port',
-                    icon: icon1,
-                  },
-                  // @todo YOUR HEADER BUTTONS DECLARATION SHOULD BE HERE
-                ];
+            myCustomView: {
+              async documentIsViewable() {
+                return true;
               },
-            },
+              renderView() {
+                return true;
+              }
+            }
           }
         });
         setIsInitialized(true);
       } catch (error) {
-        console.error('Failed to initialize guest:', error);
-        setError(error instanceof Error ? error.message : 'Failed to initialize');
+        console.error("Error initializing guest:", error);
       }
     };
 
-    init();
+    initGuest();
   }, []);
 
-  if (error) {
-    return (
-      <div>
-        <Text>Error: {error}</Text>
-      </div>
-    );
-  }
-
   return (
-    <div>
+    <View>
       {isInitialized ? (
         <Text>IFrame for integration with Host (Workfront)...</Text>
       ) : (
         <Text>Initializing...</Text>
       )}
-    </div>
+    </View>
   );
 };
 
-export default ExtensionRegistration; 
+export default ExtensionRegistration;

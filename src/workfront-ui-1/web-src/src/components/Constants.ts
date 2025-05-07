@@ -1,1 +1,1 @@
-export const extensionId: string = 'test-port'; 
+export const EXTENSION_ID = "My Custom View Extension";

@@ -2,13 +2,15 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "nodenext",
     "types": ["jest", "node", "@testing-library/jest-dom"],
-    "isolatedModules": false
+    "isolatedModules": true,
+    "noEmit": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
     "test/**/*.ts",
     "test/**/*.tsx",
     "jest.setup.ts"

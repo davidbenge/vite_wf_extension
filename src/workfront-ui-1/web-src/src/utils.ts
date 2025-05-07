@@ -1,9 +1,9 @@
 /*
-* <license header>
-*/
+ * <license header>
+ */
 
 interface ActionWebInvokeOptions {
-  method?: 'GET' | 'POST';
+  method?: "GET" | "POST";
 }
 
 type ActionWebInvokeHeaders = Record<string, string>;
@@ -31,8 +31,10 @@ export const isInIframe = (): boolean => {
  * @returns boolean indicating if we're on localhost
  */
 export const isLocalhost = (): boolean => {
-  return window.location.hostname === 'localhost' || 
-         window.location.hostname === '127.0.0.1';
+  return (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  );
 };
 
 /**
@@ -47,34 +49,36 @@ async function actionWebInvoke(
   actionUrl: string,
   headers: ActionWebInvokeHeaders = {},
   params: ActionWebInvokeParams = {},
-  options: ActionWebInvokeOptions = { method: 'POST' }
+  options: ActionWebInvokeOptions = { method: "POST" },
 ): Promise<any> {
   const actionHeaders: ActionWebInvokeHeaders = {
-    'Content-Type': 'application/json',
-    ...headers
+    "Content-Type": "application/json",
+    ...headers,
   };
 
   const fetchConfig: RequestInit = {
-    headers: actionHeaders
+    headers: actionHeaders,
   };
 
-  if (window.location.hostname === 'localhost') {
-    actionHeaders['x-ow-extra-logging'] = 'on';
+  if (window.location.hostname === "localhost") {
+    actionHeaders["x-ow-extra-logging"] = "on";
   }
 
   fetchConfig.method = options.method?.toUpperCase();
 
-  if (fetchConfig.method === 'GET') {
+  if (fetchConfig.method === "GET") {
     const url = new URL(actionUrl);
-    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+    Object.keys(params).forEach((key) =>
+      url.searchParams.append(key, params[key]),
+    );
     actionUrl = url.toString();
-  } else if (fetchConfig.method === 'POST') {
+  } else if (fetchConfig.method === "POST") {
     fetchConfig.body = JSON.stringify(params);
   }
-  
+
   const response = await fetch(actionUrl, fetchConfig);
   let content = await response.text();
-  
+
   if (!response.ok) {
     return JSON.parse(content);
   }
@@ -86,4 +90,24 @@ async function actionWebInvoke(
   return content;
 }
 
-export default actionWebInvoke; 
+export default actionWebInvoke;
+
+export const callMyRuntimeAction = async (payload: any): Promise<any> => {
+  try {
+    const response = await fetch("/api/runtime/action", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error calling runtime action:", error);
+    throw error;
+  }
+};
+
+export const someValidation = (data: any): boolean => {
+  return data && typeof data === "object";
+};

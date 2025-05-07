@@ -1,17 +1,19 @@
-import type { Config } from '@jest/types';
+import type { Config } from 'jest';
 
-const config: Config.InitialOptions = {
+const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/workfront-ui-1/web-src/src/$1',
-    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.ts'
+    '\\.(css|less|sass|scss)$': '<rootDir>/test/__mocks__/styleMock.js',
+    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js'
   },
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: 'tsconfig.test.json'
+      tsconfig: {
+        moduleResolution: 'node',
+        module: 'commonjs'
+      }
     }]
   },
   coverageDirectory: 'coverage',
@@ -25,13 +27,14 @@ const config: Config.InitialOptions = {
     '!src/**/__tests__/**'
   ],
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.{ts,tsx}',
-    '<rootDir>/src/**/*.{spec,test}.{ts,tsx}'
+    '<rootDir>/test/**/*.{spec,test}.{ts,tsx}',
+    '<rootDir>/test/**/__tests__/**/*.{ts,tsx}'
   ],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
-  ]
+  ],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
 };
 
 export default config; 
